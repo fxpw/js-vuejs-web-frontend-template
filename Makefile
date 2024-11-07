@@ -22,6 +22,9 @@ build_start:
 rebuild: down build_no_cache up
 	echo "rebuild"
 
+npm_install:
+	$(exec_in_container) npm install $(p)
+
 vite_build:
 	$(exec_in_container) npm run build
 vite_preview:

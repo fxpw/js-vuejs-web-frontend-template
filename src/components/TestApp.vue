@@ -2,8 +2,9 @@
 	<div id="app" class="container">
 		<h1 class="title">{{ title }}</h1>
 		<p class="description">{{ description }}</p>
-		<p class="description">{{ typeof(someData) }} {{ someData }}</p>
-		<p class="description">{{ typeof(anotherData) }} {{ anotherData }}</p>
+		<p class="description">{{ typeof (someData) }} {{ someData }}</p>
+		<p class="description">{{ typeof (anotherData) }} {{ anotherData }}</p>
+		<h1>{{ message }}</h1>
 		<button class="cta-button" @click="changeTitle">Сменить заголовок</button>
 		<button class="cta-button" @click="toggleDescription">Показать/Скрыть Описание</button>
 		<button class="cta-button" @click="incrementCounter">Увеличить счетчик</button>
@@ -12,10 +13,13 @@
 		<div v-if="showExtra">
 			<p>Это дополнительный текст, который отображается по нажатию кнопки.</p>
 		</div>
+		<button @click="fetchMessage">Fetch Message</button>
 	</div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
 	name: 'TestApp',
 	data() {
@@ -23,7 +27,8 @@ export default {
 			title: 'Добро пожаловать в Vue.js!',
 			description: 'Это пример страницы, созданной с использованием Vue.js.',
 			counter: 0,
-			showExtra: false
+			showExtra: false,
+			message: ''
 		};
 	},
 	methods: {
@@ -38,17 +43,25 @@ export default {
 		},
 		showAlert() {
 			alert('Это сообщение предупреждения!');
+		},
+		async fetchMessage() {
+			try {
+				const response = await axios.get('http://localhost:5000/api');
+				this.message = response.data.message;
+			} catch (error) {
+				console.error("There was an error!", error);
+			}
 		}
 	},
 	props: {
-        someData: {
-            type: [String],
-        },
-        anotherData: {
-            type: [Number],
-        },
+		someData: {
+			type: [String],
+		},
+		anotherData: {
+			type: [Number],
+		},
 
-    }
+	}
 }
 </script>
 

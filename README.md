@@ -1,5 +1,26 @@
-# Vue 3 + Vite
+Настройки можно посмотреть в ```.env``` файле.
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Команды
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+### Общие команды
+- `make all` - выполняет действия, определенные в целях `build` и `start`.
+- `make build` - строит Docker-образы.
+- `make build_no_cache` - строит Docker-образы без использования кэша.
+- `make stop` - останавливает и удаляет контейнеры.
+- `make down` - останавливает и удаляет контейнеры.
+
+### Рабочие команды
+- `make run` - запускает контейнеры в фоновом режиме.
+- `make up` - запускает контейнеры в фоновом режиме.
+- `make start` - запускает контейнеры в фоновом режиме.
+- `make build_start` - строит Docker-образы.
+
+## Примеры использования
+```sh
+make build                # постройте Docker-образы
+make run                  # запустите контейнеры
+make vite_build           # собрать статику для Nginx
+make vite_dev             # начать создавать приложение через localhost:5173
+
+```
+
