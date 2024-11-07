@@ -25,6 +25,6 @@ rebuild: down build_no_cache up
 vite_build:
 	$(exec_in_container) npm run build
 vite_preview:
-	$(exec_in_container) npm run preview:
+	$(exec_in_container) npm run preview
 vite_dev:
 	$(exec_in_container) npm run dev

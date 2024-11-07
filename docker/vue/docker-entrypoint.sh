@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Destination of env file inside container
 ENV_FILE="/app/.env"
 
@@ -21,5 +20,4 @@ done
 
 npm install
 
-tail -f /dev/null
-
+npm run dev
