@@ -12,7 +12,7 @@ const isBlacklisted = (name) => {
 }
 
 async function registerComponents() {
-	const components = import.meta.glob('./components/**/*.vue');
+	const components = import.meta.glob('./components/*.vue');
 
 	for (const path in components) {
 		const componentName = path
