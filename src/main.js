@@ -1,38 +1,66 @@
-import './style.css'
-
+import './style.css';
 import { createApp } from 'vue';
+import App from './App.vue';
+// @ts-ignore
+import { config } from 'md-editor-v3';
+import 'md-editor-v3/lib/style.css';
 
-const app = createApp({});
+import screenfull from 'screenfull';
+// @ts-ignore
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+// @ts-ignore
+import Cropper from 'cropperjs';
+import 'cropperjs/dist/cropper.css';
+// @ts-ignore
+import mermaid from 'mermaid';
 
-const blacklist = [
-];
+import highlight from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css';
 
-const isBlacklisted = (name) => {
-	return blacklist.some(blacklistedName => name.includes(blacklistedName));
-}
+import * as prettier from 'prettier';
+import parserMarkdown from 'prettier/plugins/markdown';
 
-async function registerComponents() {
-	const components = import.meta.glob('./components/*.vue');
+config({
+	editorExtensions: {
+		prettier: {
+			prettierInstance: prettier,
+			parserMarkdownInstance: parserMarkdown,
+		},
+		highlight: {
+			instance: highlight,
+		},
+		screenfull: {
+			instance: screenfull,
+		},
+		katex: {
+			instance: katex,
+		},
+		cropper: {
+			instance: Cropper,
+		},
+		mermaid: {
+			instance: mermaid,
+		},
+	},
+});
 
-	for (const path in components) {
-		const componentName = path
-			.split('/')
-			.pop()
-			.replace(/\.\w+$/, '');
-		if (isBlacklisted(componentName)) {
-			continue;
-		}
-		console.log(componentName);
-		try {
-			const component = await components[path]();
-			// Register the component
-			app.component(componentName, component.default || component);
-		} catch (error) {
-			console.error(`Failed to load component at ${path}:`, error);
-		}
-	}
-}
+// @ts-ignore
+// import authMiddleware from './js/middlewares/auth';
+import { createRouter, createWebHistory } from 'vue-router';
+// @ts-ignore
+import { loadRoutes } from './router';
+const router = createRouter({
+	history: createWebHistory(),
+	routes: [],
+});
 
-registerComponents().then(() => {
+loadRoutes().then((routes) => {
+	routes.forEach(route => router.addRoute(route));
+	// router.beforeEach(authMiddleware);
+	const app = createApp(App);
+	app.use(router);
 	app.mount('#app');
+}).catch((err) => {
+	console.error("Ошибка при инициализации маршрутов:", err);
 });
